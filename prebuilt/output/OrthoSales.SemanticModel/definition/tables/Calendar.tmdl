@@ -1,0 +1,26 @@
+table Calendar
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: yyyy-MM-dd
+		summarizeBy: none
+		sourceColumn: Date
+
+	column Month
+		dataType: string
+		summarizeBy: none
+		sourceColumn: Month
+
+	partition Calendar = m
+		mode: import
+		source =
+				let
+					Start = Date.StartOfYear(List.Min(SalesSource[order_date])),
+					End = Date.EndOfYear(List.Max(SalesSource[order_date])),
+					Dates = List.Dates(Start, Duration.Days(End - Start) + 1, #duration(1, 0, 0, 0)),
+					CalendarTable = Table.FromColumns({Dates}, type table [Date = date]),
+					WithMonth = Table.AddColumn(CalendarTable, "Month", each Date.ToText([Date], "yyyy-MM", "en-US"), type text)
+				in
+					WithMonth

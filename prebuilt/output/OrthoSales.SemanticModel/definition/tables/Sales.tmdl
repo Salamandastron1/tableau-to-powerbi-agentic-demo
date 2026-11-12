@@ -1,0 +1,76 @@
+table Sales
+
+	measure 'Total Revenue' = SUM('Sales'[revenue])
+		formatString: $#,##0.00
+
+	measure 'Total Units' = SUM('Sales'[units])
+		formatString: #,##0
+
+	measure 'Revenue Prior Year' = CALCULATE([Total Revenue], DATEADD('Calendar'[Date], -1, YEAR))
+		formatString: $#,##0.00
+
+	measure 'Selected Top N' = SELECTEDVALUE('Top N'[Value], 10)
+		formatString: 0
+
+	measure 'Top N Revenue' = VAR Winners = TOPN([Selected Top N], ALLSELECTED('Sales'[sku]), [Total Revenue], DESC, 'Sales'[sku], ASC) RETURN CALCULATE([Total Revenue], KEEPFILTERS(Winners))
+		formatString: $#,##0.00
+
+	measure 'Average Selling Price' = DIVIDE([Total Revenue], [Total Units])
+		formatString: $#,##0.00
+
+	measure 'YoY Revenue Growth' = DIVIDE([Total Revenue] - [Revenue Prior Year], ABS([Revenue Prior Year]))
+		formatString: 0.00%
+
+	measure 'Revenue Band' = SELECTEDVALUE('Sales'[Revenue Band Value])
+
+	measure 'Order Month' = SELECTEDVALUE('Sales'[Order Month Value])
+		formatString: yyyy-MM
+
+	column order_date
+		dataType: dateTime
+		summarizeBy: none
+		sourceColumn: order_date
+		formatString: yyyy-MM-dd
+
+	column region
+		dataType: string
+		summarizeBy: none
+		sourceColumn: region
+
+	column territory
+		dataType: string
+		summarizeBy: none
+		sourceColumn: territory
+
+	column product_line
+		dataType: string
+		summarizeBy: none
+		sourceColumn: product_line
+
+	column sku
+		dataType: string
+		summarizeBy: none
+		sourceColumn: sku
+
+	column units
+		dataType: int64
+		summarizeBy: sum
+		sourceColumn: units
+
+	column revenue
+		dataType: decimal
+		summarizeBy: sum
+		sourceColumn: revenue
+		formatString: $#,##0.00
+
+	column 'Revenue Band Value' = IF('Sales'[revenue] >= 10000, "Large", "Standard")
+		dataType: string
+		summarizeBy: none
+
+	column 'Order Month Value' = DATE(YEAR('Sales'[order_date]), MONTH('Sales'[order_date]), 1)
+		dataType: dateTime
+		summarizeBy: none
+
+	partition Sales = m
+		mode: import
+		source = SalesSource

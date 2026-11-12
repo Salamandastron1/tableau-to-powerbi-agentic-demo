@@ -1,0 +1,27 @@
+{
+  "verification": "Python reference arithmetic, emitted-expression and structural checks only",
+  "runtime_verified": false,
+  "files": {
+    "docs\\mapping.md": "19247530e81e787b4b314d2363e83e89bd007380e2be1f4fe7717f0df4ccd22f",
+    "output\\migration.json": "70e4adcca063895d272965b6549fad862fbffe2b05a39fe6437d9fe11d3c0e0c",
+    "output\\OrthoSales.pbip": "92bb7a4a87a078f9a0cd660293021224c5f6061bfe9be2557bb6da4a5edfebd0",
+    "output\\OrthoSales.Report\\definition\\pages\\Overview\\page.json": "646eed68b35b7e43204675c635e16f89c3e0f838c721175d082fcd21fa31efe2",
+    "output\\OrthoSales.Report\\definition\\pages\\Overview\\visuals\\MonthlyUnits\\visual.json": "6f5db7d97af6ffb8b60fc31eb17e5af74ff48afe78a4866e91fea91a91ff6c91",
+    "output\\OrthoSales.Report\\definition\\pages\\Overview\\visuals\\Region\\visual.json": "14bb2e89733068dedd49ff03af8eb1fb488a39be5e60d19072900373b5d406b8",
+    "output\\OrthoSales.Report\\definition\\pages\\Overview\\visuals\\RevenueByRegion\\visual.json": "02a28e237da0e56dc6af08223911c8af3d26a69e0a58ea0cddeb0d2a863801ac",
+    "output\\OrthoSales.Report\\definition\\pages\\Overview\\visuals\\TopN\\visual.json": "fda4f55a8d92cd47055258f9e10381b43266b2b5c2c1632a507507aa46a40a42",
+    "output\\OrthoSales.Report\\definition\\pages\\Overview\\visuals\\TopSKUs\\visual.json": "1f7900938fa6b198e920a45af695b18707019501076c1dc8f2fb5f87a9689edd",
+    "output\\OrthoSales.Report\\definition\\pages\\pages.json": "821a81d0601e73dde436c2054d111f2aa0ef1cc78fe5ad788aca1dcc4ab8a3a5",
+    "output\\OrthoSales.Report\\definition\\report.json": "a5ee829a4c86dfc4b6483d8d009896673be79173ba8ff1bbabb448f9b63df8c3",
+    "output\\OrthoSales.Report\\definition\\version.json": "c761e768563bdd636679fc53a7acf2c973f02a8843ee7dcdfb0cc82616c28c38",
+    "output\\OrthoSales.Report\\definition.pbir": "e25ec94deaa6318ef9aa0ba79169e2cca61f2eedf704098be2372a5977bc203b",
+    "output\\OrthoSales.SemanticModel\\definition\\database.tmdl": "8063b865bf531e14b59b97632e01bf9fe7d9e50a9c08c29b6b22b04c7955a077",
+    "output\\OrthoSales.SemanticModel\\definition\\expressions.tmdl": "3cdbaf68d22ed767763739621e3e5a1776e65144eb2e8a71430f1d0b05aae78b",
+    "output\\OrthoSales.SemanticModel\\definition\\model.tmdl": "cdc71fad2fd83b17c38958195ec215ccf76451998f18c607f4b5eaf94c4f0bb5",
+    "output\\OrthoSales.SemanticModel\\definition\\relationships.tmdl": "dc3c2982aca60e44ec0ec8017c2b2805d1b7ccbac0f301ae983bb7023bc69e8d",
+    "output\\OrthoSales.SemanticModel\\definition\\tables\\Calendar.tmdl": "4c1642f83a8a838982b9a9bd7f371f7356575660977dcb2f066db4a931fa4cf7",
+    "output\\OrthoSales.SemanticModel\\definition\\tables\\Sales.tmdl": "ef8b185152e7f2a7e545ccf8ac1360b1df9a8d09f790064770b4b313f9ac3a70",
+    "output\\OrthoSales.SemanticModel\\definition\\tables\\Top N.tmdl": "302108fe3f499f983e560fcc2ecb4a880ed5f112a73b87c806dae0ea895f8319",
+    "output\\OrthoSales.SemanticModel\\definition.pbism": "e1efe9b0b2da6fa5e2157d1970e7cd585e698ecf3aeddce362d703ff6700d328"
+  }
+}

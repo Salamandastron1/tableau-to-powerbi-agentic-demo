@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<workbook original-version="18.1" source-build="2023.1" source-platform="win" version="18.1" xmlns:user="http://www.tableausoftware.com/xml/user">
+  <document-format-change-manifest />
+  <preferences />
+  <datasources>
+    <datasource caption="Parameters" hasconnection="false" inline="true" name="Parameters" version="18.1">
+      <column caption="Top N" datatype="integer" name="[Top N]" param-domain-type="range" role="measure" type="quantitative" value="10">
+        <calculation class="tableau" formula="10" />
+        <range granularity="1" max="20" min="1" />
+      </column>
+    </datasource>
+    <datasource caption="Synthetic Orthopedic Sales" inline="true" name="ortho_sales" version="18.1">
+      <connection class="textscan" directory="data" filename="ortho_sales.csv" password="" server="">
+        <relation name="ortho_sales.csv" table="[ortho_sales#csv]" type="table">
+          <columns header="yes" locale="en_US" separator=",">
+            <column datatype="date" name="order_date" ordinal="0" />
+            <column datatype="string" name="region" ordinal="1" />
+            <column datatype="string" name="territory" ordinal="2" />
+            <column datatype="string" name="product_line" ordinal="3" />
+            <column datatype="string" name="sku" ordinal="4" />
+            <column datatype="integer" name="units" ordinal="5" />
+            <column datatype="real" name="revenue" ordinal="6" />
+          </columns>
+        </relation>
+      </connection>
+      <column caption="Order Date" datatype="date" name="[order_date]" role="dimension" type="ordinal" />
+      <column caption="Region" datatype="string" name="[region]" role="dimension" type="nominal" />
+      <column caption="Territory" datatype="string" name="[territory]" role="dimension" type="nominal" />
+      <column caption="Product Line" datatype="string" name="[product_line]" role="dimension" type="nominal" />
+      <column caption="SKU" datatype="string" name="[sku]" role="dimension" type="nominal" />
+      <column caption="Units" datatype="integer" name="[units]" role="measure" type="quantitative" />
+      <column caption="Revenue" datatype="real" default-format="c&quot;$&quot;#,##0.00" name="[revenue]" role="measure" type="quantitative" />
+      <column caption="Average Selling Price" datatype="real" name="[Average Selling Price]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="SUM([revenue]) / SUM([units])" />
+      </column>
+      <column caption="YoY Revenue Growth" datatype="real" name="[YoY Revenue Growth]" role="measure" type="quantitative">
+        <calculation class="tableau" formula="(SUM([revenue]) - LOOKUP(SUM([revenue]), -12)) / ABS(LOOKUP(SUM([revenue]), -12))">
+          <table-calc aggregation="Sum" ordering-type="Rows" type="Lookup" />
+        </calculation>
+      </column>
+      <column caption="Revenue Band" datatype="string" name="[Revenue Band]" role="dimension" type="nominal">
+        <calculation class="tableau" formula="IF [revenue] &gt;= 10000 THEN 'Large' ELSE 'Standard' END" />
+      </column>
+      <column caption="Order Month" datatype="date" name="[Order Month]" role="dimension" type="ordinal">
+        <calculation class="tableau" formula="DATETRUNC('month', [order_date])" />
+      </column>
+      <column-instance column="[region]" derivation="None" name="[none:region:nk]" pivot="key" type="nominal" />
+      <column-instance column="[product_line]" derivation="None" name="[none:product_line:nk]" pivot="key" type="nominal" />
+      <column-instance column="[sku]" derivation="None" name="[none:sku:nk]" pivot="key" type="nominal" />
+      <column-instance column="[Order Month]" derivation="None" name="[none:Order Month:ok]" pivot="key" type="ordinal" />
+      <column-instance column="[revenue]" derivation="Sum" name="[sum:revenue:qk]" pivot="key" type="quantitative" />
+      <column-instance column="[units]" derivation="Sum" name="[sum:units:qk]" pivot="key" type="quantitative" />
+    </datasource>
+  </datasources>
+  <worksheets>
+    <worksheet name="Revenue by Region">
+      <table>
+        <view>
+          <datasources><datasource caption="Synthetic Orthopedic Sales" name="ortho_sales" /></datasources>
+          <filter class="categorical" column="[ortho_sales].[none:region:nk]" context="true">
+            <groupfilter function="all" />
+          </filter>
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes><pane><view><breakdown value="auto" /></view><mark class="Bar" /></pane></panes>
+        <rows>[ortho_sales].[none:region:nk]</rows>
+        <cols>[ortho_sales].[sum:revenue:qk]</cols>
+      </table>
+    </worksheet>
+    <worksheet name="Monthly Units by Product Line">
+      <table>
+        <view>
+          <datasources><datasource caption="Synthetic Orthopedic Sales" name="ortho_sales" /></datasources>
+          <filter class="categorical" column="[ortho_sales].[none:region:nk]" context="true"><groupfilter function="all" /></filter>
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes><pane><view><breakdown value="auto" /></view><mark class="Line" /><encodings><color column="[ortho_sales].[none:product_line:nk]" /></encodings></pane></panes>
+        <rows>[ortho_sales].[sum:units:qk]</rows>
+        <cols>[ortho_sales].[none:Order Month:ok]</cols>
+      </table>
+    </worksheet>
+    <worksheet name="Top SKUs">
+      <table>
+        <view>
+          <datasources>
+            <datasource caption="Synthetic Orthopedic Sales" name="ortho_sales" />
+            <datasource caption="Parameters" name="Parameters" />
+          </datasources>
+          <filter class="categorical" column="[ortho_sales].[none:region:nk]" context="true"><groupfilter function="all" /></filter>
+          <filter class="categorical" column="[ortho_sales].[none:sku:nk]">
+            <groupfilter function="end" count="[Parameters].[Top N]" end="top" units="records">
+              <groupfilter function="order" direction="DESC" expression="SUM([revenue])">
+                <groupfilter function="level-members" level="[none:sku:nk]" />
+              </groupfilter>
+            </groupfilter>
+          </filter>
+          <aggregation value="true" />
+        </view>
+        <style />
+        <panes><pane><view><breakdown value="auto" /></view><mark class="Text" /><encodings><text column="[ortho_sales].[sum:revenue:qk]" /></encodings></pane></panes>
+        <rows>[ortho_sales].[none:sku:nk]</rows>
+        <cols />
+      </table>
+    </worksheet>
+  </worksheets>
+  <dashboards>
+    <dashboard name="Orthopedic Sales Overview">
+      <style />
+      <size maxheight="900" maxwidth="1280" minheight="900" minwidth="1280" sizing-mode="fixed" />
+      <zones>
+        <zone h="44000" id="1" name="Revenue by Region" w="48000" x="0" y="0" />
+        <zone h="44000" id="2" name="Monthly Units by Product Line" w="52000" x="48000" y="0" />
+        <zone h="56000" id="3" name="Top SKUs" w="100000" x="0" y="44000" />
+      </zones>
+    </dashboard>
+  </dashboards>
+  <windows>
+    <window class="dashboard" maximized="true" name="Orthopedic Sales Overview" />
+  </windows>
+</workbook>

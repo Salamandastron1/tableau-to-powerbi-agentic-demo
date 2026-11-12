@@ -1,0 +1,16 @@
+{
+  "mcpServers": {
+    "tableau": {
+      "type": "local",
+      "command": "python",
+      "args": ["tools/tableau_mcp.py"],
+      "tools": ["*"]
+    },
+    "pbip": {
+      "type": "local",
+      "command": "python",
+      "args": ["tools/pbip_mcp.py"],
+      "tools": ["*"]
+    }
+  }
+}

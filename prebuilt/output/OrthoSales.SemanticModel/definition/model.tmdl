@@ -1,0 +1,10 @@
+model Model
+	culture: en-US
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+
+	annotation PBI_QueryOrder = ["Sales", "Calendar", "Top N"]
+
+	ref table Sales
+	ref table Calendar
+	ref table 'Top N'

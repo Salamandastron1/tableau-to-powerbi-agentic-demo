@@ -1,0 +1,14 @@
+{
+  "servers": {
+    "tableau": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["${workspaceFolder}/tools/tableau_mcp.py"]
+    },
+    "pbip": {
+      "type": "stdio",
+      "command": "python",
+      "args": ["${workspaceFolder}/tools/pbip_mcp.py"]
+    }
+  }
+}

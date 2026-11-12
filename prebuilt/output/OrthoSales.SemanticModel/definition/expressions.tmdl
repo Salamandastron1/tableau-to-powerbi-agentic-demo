@@ -1,0 +1,9 @@
+expression DataFilePath = "SET_BY_RESET_FALLBACK" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+
+expression SalesSource =
+		let
+			Raw = Csv.Document(File.Contents(DataFilePath), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+			Headers = Table.PromoteHeaders(Raw, [PromoteAllScalars=true]),
+			Typed = Table.TransformColumnTypes(Headers, {{"order_date", type date}, {"region", type text}, {"territory", type text}, {"product_line", type text}, {"sku", type text}, {"units", Int64.Type}, {"revenue", Currency.Type}}, "en-US")
+		in
+			Typed

@@ -1,0 +1,17 @@
+{
+  "profile": "orthosales-v1",
+  "workbook": "sample\\OrthoSales.twb",
+  "source": "sample\\data\\ortho_sales.csv",
+  "workbook_sha256": "184b46454f454ad7cb2b9181a52e5789fae71521d64334a0c3637a764d2cf144",
+  "source_sha256": "ec99f824f4b431818d9c461695ecc4e6a4254293bfe11819aa116592af0638ce",
+  "calculated_fields": [
+    "Average Selling Price",
+    "YoY Revenue Growth",
+    "Revenue Band",
+    "Order Month"
+  ],
+  "limitations": [
+    "Desktop/Power Query/DAX execution not verified by Python checks",
+    "Reviewed synthetic profile only; not a general Tableau converter"
+  ]
+}

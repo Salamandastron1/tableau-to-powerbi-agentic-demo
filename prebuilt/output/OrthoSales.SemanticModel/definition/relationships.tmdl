@@ -1,0 +1,6 @@
+relationship Sales_Calendar
+	fromColumn: Sales.order_date
+	toColumn: Calendar.Date
+	fromCardinality: many
+	toCardinality: one
+	crossFilteringBehavior: oneDirection
